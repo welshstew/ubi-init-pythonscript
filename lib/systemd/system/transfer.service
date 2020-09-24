@@ -1,0 +1,11 @@
+[Unit]
+Description=My Transfer Service
+After=multi-user.target
+
+[Service]
+EnvironmentFile=/etc/transfer/transfer.env
+Type=simple
+ExecStart=/usr/bin/python3 /home/transfer.py
+
+[Install]
+WantedBy=multi-user.target
