@@ -22,3 +22,33 @@ Run with:
 podman run --mount=type=bind,source=./env,destination=/etc/transfer,relabel=shared quay.io/swinches/ubi-init-pythonscript:latest
 ```
 
+Run on Openshift:
+
+```
+oc create secret generic script-config --from-file=./env/
+
+oc create -f - <<EOF
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  generateName: ftping-
+  labels:
+    script: python
+    init: systemd
+spec:
+  containers:
+  - name: pythonscript
+    image: quay.io/swinches/ubi-init-pythonscript:latest
+    volumeMounts:
+    - mountPath: /etc/transfer
+      name: script-config
+  restartPolicy: Never
+  volumes:
+  - name: script-config
+    secret:
+      secretName: script-config
+...
+EOF
+```
+
