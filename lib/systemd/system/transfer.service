@@ -1,6 +1,8 @@
 [Unit]
 Description=My Transfer Service
 After=multi-user.target
+StandardOutput=journal+console
+StandardError=journal+console
 
 [Service]
 EnvironmentFile=/etc/transfer/transfer.env

@@ -1,0 +1,1 @@
+systemctl status transfer.service | awk 'NR==3' | grep -v dead

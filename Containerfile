@@ -7,8 +7,10 @@ RUN dnf install -y python3 \
 
 ADD lib/systemd/system/*.service /lib/systemd/system/
 ADD script/*.py /home
+ADD health/*.sh /home
 
 RUN systemctl enable helloworld.service \
-    && systemctl enable transfer.service
+    && systemctl enable transfer.service \
+    && chmod +x /home/*.sh
 
 CMD [ "/sbin/init" ]
